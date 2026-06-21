@@ -20,12 +20,17 @@ palestra), **dashboard** para a equipe e **conformidade com a LGPD**.
 
 ## Capturas de tela
 
-<!-- Adicione seus prints em docs/screenshots/ e remova os comentários abaixo -->
-<!-- ![Home](docs/screenshots/home.png) -->
-<!-- ![Portaria](docs/screenshots/portaria.png) -->
-<!-- ![Dashboard](docs/screenshots/dashboard.png) -->
+**Página inicial — divulgação do evento**
 
-_Landing do evento • Portaria (leitura do QR com foto) • Dashboard da equipe._
+![Home](docs/screenshots/home.png)
+
+**Portaria — validação na entrada principal e por palestra**
+
+![Portaria](docs/screenshots/portaria.png)
+
+**Dashboard da equipe — presença, cursos e semestres**
+
+![Dashboard](docs/screenshots/dashboard.png)
 
 ---
 
