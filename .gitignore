@@ -1,0 +1,32 @@
+# Build
+bin/
+obj/
+out/
+publish/
+
+# IDE
+.vs/
+.vscode/
+.idea/
+*.user
+*.suo
+
+# .NET
+*.dll
+*.pdb
+project.lock.json
+
+# Banco SQLite do modo dev (não versionar)
+*.db
+*.db-shm
+*.db-wal
+
+# Segredos locais (nunca versione)
+appsettings.*.Local.json
+secrets.json
+*.pfx
+.env
+
+# OS
+.DS_Store
+Thumbs.db

@@ -1,0 +1,43 @@
+services:
+  db:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    environment:
+      ACCEPT_EULA: "Y"
+      MSSQL_SA_PASSWORD: "Your_strong_Pass123"
+    ports:
+      - "1433:1433"
+    healthcheck:
+      # Espera o SQL Server aceitar conexões antes da API subir.
+      test: ["CMD-SHELL", "/opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -P \"$$MSSQL_SA_PASSWORD\" -C -Q \"SELECT 1\" || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+    volumes:
+      - mssql-data:/var/opt/mssql
+
+  api:
+    build:
+      context: .
+      dockerfile: src/EventGate.Api/Dockerfile
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      ASPNETCORE_ENVIRONMENT: "Development"
+      Database__Provider: "SqlServer"
+      ConnectionStrings__Default: "Server=db,1433;Database=EventGate;User Id=sa;Password=Your_strong_Pass123;TrustServerCertificate=True;Encrypt=False"
+      # Placeholder de desenvolvimento — troque em produção e nunca versione segredos reais.
+      Jwt__Key: "DEV_PLACEHOLDER_CHANGE_ME_min_32_chars_secret_key_0123456789"
+      Jwt__Issuer: "EventGate"
+      Jwt__Audience: "EventGate"
+      # E-mail (Brevo): preencha a API key e o remetente verificado para enviar de verdade.
+      # Em produção, injete via secret/variável de ambiente — não versione a key real.
+      Brevo__ApiKey: "${BREVO_API_KEY:-}"
+      Brevo__SenderEmail: "${BREVO_SENDER_EMAIL:-no-reply@eventgate.local}"
+      Brevo__SenderName: "EventGate"
+    ports:
+      - "8080:8080"
+
+volumes:
+  mssql-data:
